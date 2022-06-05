@@ -17,7 +17,9 @@ const {
 
 module.exports = {
   async connectIRC(client) {
-    // IRC Connection, this takes a while so do it first
+    // If there is no password provided, dont even try to connect
+    if (!ircPassword) { return; }
+
     ircConfig.userName = ircUsername;
     ircConfig.password = ircPassword;
 
@@ -47,7 +49,7 @@ module.exports = {
       }
     });
     global.ircClient.addListener('error', message => {
-      logger.error(`[${PREFIX}] Error: ${JSON.stringify(message, null, 2)}`);
+      logger.error(`[${PREFIX}] Error - ${JSON.stringify(message, null, 2)}`);
       // global.ircClient.say('Moonbear', 'Hello world!');
     });
   },
